@@ -1,0 +1,30 @@
+hosts:
+  masters:
+  - name: k8s-b-master-1
+    IP: 192.168.1.100
+  - name: k8s-b-master-2
+    IP: 192.168.1.101
+  - name: k8s-b-master-3
+    IP: 192.168.1.102
+  nodes:
+  - name: k8s-b-node-1
+    IP: 192.168.1.150
+  - name: k8s-b-node-2
+    IP: 192.168.1.151
+  - name: k8s-b-node-3
+    IP: 192.168.1.152
+apps:
+- name: cfssl
+  source: bin/cfssl/
+  target: /usr/local/bin/
+- name: etcd
+  source: bin/etcd/
+  target: /opt/etcd/
+- name: kubernetes
+  source: bin/kubernetes/
+  target: /opt/kubernetes/
+parameters:
+- name: cert-term
+  value: 87600
+- name: token
+  value: ""
