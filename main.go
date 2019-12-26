@@ -4,6 +4,7 @@ import (
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"log"
+	"os/exec"
 )
 
 type Node struct {
@@ -53,4 +54,20 @@ func main() {
 		log.Fatalln(err)
 	}
 
+	for _, v := range hostConfig.AppInfo {
+		if err := execMkdir(v.AppSourcePath); err != nil {
+			log.Println(err)
+		}
+		if err := execMkdir(v.AppTargetPath); err != nil {
+			log.Println(err)
+		}
+	}
+}
+
+func execMkdir(directoryPath string) error {
+	cmd := exec.Command("mkdir", directoryPath)
+	if err := cmd.Run(); err != nil {
+		return err
+	}
+	return nil
 }
