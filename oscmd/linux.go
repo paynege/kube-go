@@ -15,12 +15,11 @@ func ExecAppStatus(appName string) (string, error) {
 		return "", err
 	}
 	reader := bufio.NewReader(code)
-	for {
-		line, err := reader.ReadString('\n')
-		if err != nil || io.EOF == err {
-			return line, err
-		}
+	status, err := reader.ReadString('\n')
+	if err != nil {
+		return "", err
 	}
+	return status, nil
 }
 
 // Linux Chmod
