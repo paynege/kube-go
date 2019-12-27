@@ -9,17 +9,12 @@ import (
 // Linux systemctl is-active
 func ExecAppStatus(appName string) (string, error) {
 	cmdString := "systemctl is-active " + appName
-	cmd := exec.Command("/bin/bash", "-c", cmdString)
-	code, err := cmd.StdoutPipe()
+	cmd := exec.Command("sh", "-c", cmdString)
+	code, err := cmd.Output()
 	if err != nil {
 		return "", err
 	}
-	reader := bufio.NewReader(code)
-	status, err := reader.ReadString('\n')
-	if err != nil {
-		return "", err
-	}
-	return status, nil
+	return string(code), nil
 }
 
 // Linux Chmod
