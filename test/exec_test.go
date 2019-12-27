@@ -2,17 +2,23 @@ package test
 
 import (
 	"paynege/kube-go/oscmd"
-	"strings"
 	"testing"
 )
 
 func TestExecAppStatus(t *testing.T) {
-	status, _ := oscmd.ExecAppStatus("sshd")
-	if !strings.EqualFold(status, "active") {
+	if status, _ := oscmd.ExecAppStatus("sshd"); status != "active" {
 		t.Error(`ExecAppStatus("sshd") is ` + status + `, expect "active"`)
 	}
-	status, _ = oscmd.ExecAppStatus("docker")
-	if !strings.EqualFold(status, "inactive") {
+}
+
+func TestExecAppStatus1(t *testing.T) {
+	if status, _ := oscmd.ExecAppStatus("firewalld"); status != "inactive" {
+		t.Error(`ExecAppStatus("firewalld") is ` + status + `, expect "inactive"`)
+	}
+}
+
+func TestExecAppStatus2(t *testing.T) {
+	if status, _ := oscmd.ExecAppStatus("docker"); status != "inactive" {
 		t.Error(`ExecAppStatus("docker") is ` + status + `, expect "inactive"`)
 	}
 }
