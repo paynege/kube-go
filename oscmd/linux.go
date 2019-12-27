@@ -8,8 +8,8 @@ import (
 
 // Linux systemctl is-active
 func ExecAppStatus(appName string) (string, error) {
-	cmdstring := "systemctl is-active " + appName
-	cmd := exec.Command("/bin/sh", "-c", cmdstring)
+	cmdString := "systemctl is-active " + appName
+	cmd := exec.Command("/bin/bash", "-c", cmdString)
 	code, err := cmd.StdoutPipe()
 	if err != nil {
 		return "", err
