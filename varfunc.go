@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"paynege/kube-go/oscmd"
@@ -23,12 +24,12 @@ func (app *App) CheckStatus() (bool, error) {
 	switch status {
 	case "active":
 		return true, nil
-	case "in-active":
-		return false, nil
-	case "load":
-		return false, nil
+	case "failed":
+		return false, errors.New(app.AppName + "status is failed")
+	case "loaded":
+		return false, errors.New(app.AppName + "status is loaded")
 	default:
-		return false, nil
+		return false, errors.New(app.AppName + "status is unknown")
 	}
 }
 
