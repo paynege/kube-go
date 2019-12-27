@@ -26,8 +26,8 @@ func (app *App) CheckStatus() (bool, error) {
 		return true, nil
 	case "failed":
 		return false, errors.New(app.AppName + "status is failed")
-	case "loaded":
-		return false, errors.New(app.AppName + "status is loaded")
+	case "inactive":
+		return false, errors.New(app.AppName + "status is inactive")
 	default:
 		return false, errors.New(app.AppName + "status is unknown")
 	}

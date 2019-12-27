@@ -2,7 +2,6 @@ package main
 
 import (
 	"log"
-	"paynege/kube-go/oscmd"
 )
 
 func main() {
@@ -12,12 +11,16 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	for _, v := range hostConfig.AppInfo {
-		if err := oscmd.ExecMkdir(v.AppSourcePath); err != nil {
-			log.Println(err)
+	/*
+		for _, v := range hostConfig.AppInfo {
+			if err := oscmd.ExecMkdir(v.AppSourcePath); err != nil {
+				log.Println(err)
+			}
+			if err := oscmd.ExecMkdir(v.AppTargetPath); err != nil {
+				log.Println(err)
+			}
 		}
-		if err := oscmd.ExecMkdir(v.AppTargetPath); err != nil {
-			log.Println(err)
-		}
-	}
+
+	*/
+	//hostConfig.AppInfo[0].CheckStatus()
 }
