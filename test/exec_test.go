@@ -50,12 +50,12 @@ func TestGenerateTpl(t *testing.T) {
 func TestExecDirectoryExist(t *testing.T) {
 	if bool, err := oscmd.ExecDirectoryExist("../template"); err != nil {
 		t.Error(`Error occur: ` + err.Error())
-	} else if !bool {
+	} else if bool != true {
 		t.Error("template does not exist, expect existed")
 	}
 	if bool, err := oscmd.ExecDirectoryExist("../root"); err != nil {
 		t.Error(`Error occur: ` + err.Error())
-	} else if !bool {
+	} else if bool != false {
 		t.Error("root existed, expect not existed")
 	}
 }
