@@ -1,7 +1,7 @@
 package test
 
 import (
-	"paynege/kube-go/helper"
+	//"paynege/kube-go/helper"
 	"paynege/kube-go/oscmd"
 
 	//"paynege/kube-go/oscmd"
