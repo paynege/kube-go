@@ -6,19 +6,22 @@ import (
 )
 
 func TestExecAppStatus(t *testing.T) {
-	if status, _ := oscmd.ExecAppStatus("sshd"); status != "active" {
+
+	if status, err := oscmd.ExecAppStatus("firewalld"); err != nil {
+		t.Error(`Error occur: ` + err.Error())
+	} else if status != "active" {
+		t.Error(`ExecAppStatus("firewalld") is ` + status + `, expect "active"`)
+	}
+
+	if status, err := oscmd.ExecAppStatus("docker"); err != nil {
+		t.Error(`Error occur: ` + err.Error())
+	} else if status != "active" {
+		t.Error(`ExecAppStatus("docker") is ` + status + `, expect "active"`)
+	}
+
+	if status, err := oscmd.ExecAppStatus("sshd"); err != nil {
+		t.Error(`Error occur: ` + err.Error())
+	} else if status != "active" {
 		t.Error(`ExecAppStatus("sshd") is ` + status + `, expect "active"`)
-	}
-}
-
-func TestExecAppStatus1(t *testing.T) {
-	if status, _ := oscmd.ExecAppStatus("firewalld"); status != "inactive" {
-		t.Error(`ExecAppStatus("firewalld") is ` + status + `, expect "inactive"`)
-	}
-}
-
-func TestExecAppStatus2(t *testing.T) {
-	if status, _ := oscmd.ExecAppStatus("docker"); status != "inactive" {
-		t.Error(`ExecAppStatus("docker") is ` + status + `, expect "inactive"`)
 	}
 }

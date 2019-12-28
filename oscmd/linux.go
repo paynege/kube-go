@@ -2,7 +2,6 @@ package oscmd
 
 import (
 	"bufio"
-	"bytes"
 	"io"
 	"os/exec"
 	"strings"
@@ -10,18 +9,13 @@ import (
 
 // Linux systemctl is-active
 func ExecAppStatus(appName string) (string, error) {
-	// cmdString := "systemctl is-active " + appName
-	// cmd := exec.Command("sh", "-c", cmdString)
-	var out bytes.Buffer
-	cmd := exec.Command("systemctl", "is-active", appName)
-	cmd.Stdout = &out
-	err := cmd.Run()
-
+	cmdString := "systemctl status " + appName + ` | grep Active | awk -F " " '{print $2}'`
+	cmd := exec.Command("sh", "-c", cmdString)
+	out, err := cmd.Output()
 	if err != nil {
 		return "", err
 	}
-	status := strings.Replace(out.String(), "\n", "", -1)
-	cmd.Process.Kill()
+	status := strings.Replace(string(out), "\n", "", -1)
 	return status, nil
 }
 
