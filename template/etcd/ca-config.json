@@ -1,7 +1,7 @@
 {
   "signing": {
     "default": {
-      "expiry": {{.}}
+      "expiry": "{{.}}"
     },
     "profiles": {
       "www": {

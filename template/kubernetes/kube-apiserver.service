@@ -3,7 +3,7 @@ Description=Kubernetes API Server
 Documentation=https://github.com/kubernetes/kubernetes
 
 [Service]
-EnvironmentFile=-/opt/kubernetes/cfg/kube-apiserver.conf
+EnvironmentFile=-{{.}}/cfg/kube-apiserver.conf
 ExecStart=/opt/kubernetes/bin/kube-apiserver \$KUBE_LOG \$KUBE_LOG_VER \\
 \$KUBE_ETCD_SERVER \$KUBE_ADDRESS \$KUBE_SECURE_PORT \$KUBE_ADVERTISE_ADDRESS \\
 \$KUBE_PRIVILEGED \$KUBE_CLUSTER_IP_RANGE \$KUBE_ADMINSSION_PLUGINS \\

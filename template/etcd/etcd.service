@@ -6,11 +6,11 @@ Wants=network-online.target
 
 [Service]
 Type=notify
-EnvironmentFile={{ etcd-target-path }}/cfg/etcd.conf
+EnvironmentFile={{.}}/cfg/etcd.conf
 ExecStart=/opt/etcd/bin/etcd \
---peer-cert-file={{ etcd-target-path }}/ssl/server.pem \
---peer-key-file={{ etcd-target-path}}/ssl/server-key.pem \
---peer-trusted-ca-file={{ etcd-target-path }}/ssl/ca.pem
+--peer-cert-file={{.}}/ssl/server.pem \
+--peer-key-file={{.}}/ssl/server-key.pem \
+--peer-trusted-ca-file={{.}}/ssl/ca.pem
 Restart=on-failure
 LimitNOFILE=65536
 

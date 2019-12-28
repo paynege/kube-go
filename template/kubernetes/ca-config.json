@@ -1,7 +1,7 @@
 {
   "signing": {
     "default": {
-      "expiry": "{{ cert-term }}"
+      "expiry": "{{.}}"
     },
     "profiles": {
       "kubernetes": {

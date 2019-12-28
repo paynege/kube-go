@@ -3,7 +3,7 @@
     "hosts": [
       "10.0.0.1",
       "127.0.0.1",      
-      "{{ master-ip }}",
+      "{{.}}",
       "kubernetes",
       "kubernetes.default",
       "kubernetes.default.svc",
