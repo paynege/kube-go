@@ -7,6 +7,20 @@ import (
 	"strings"
 )
 
+func CheckAppInstalled(appName string) (bool, error) {
+	cmdString := "yum info installed " + appName
+	cmd := exec.Command("sh", "-c", cmdString)
+	out, err := cmd.Output()
+	if err != nil {
+		return false, err
+	}
+	if len(out) != 0 {
+		return true, nil
+	} else {
+		return false, nil
+	}
+}
+
 // Linux systemctl is-active
 func ExecAppStatus(appName string) (string, error) {
 	cmdString := "systemctl status " + appName + ` | grep Active | awk -F " " '{print $2}'`
