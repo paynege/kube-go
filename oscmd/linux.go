@@ -1,8 +1,6 @@
 package oscmd
 
 import (
-	"bufio"
-	"io"
 	"os/exec"
 	"strings"
 )
@@ -65,23 +63,18 @@ func ExecDaemonReload() error {
 func ExecDirectoryExist(rsc string) (bool, error) {
 	cmdString := "test -e " + rsc + " && echo 1 || echo 0"
 	cmd := exec.Command("sh", "-c", cmdString)
-	code, err := cmd.StdoutPipe()
+	code, err := cmd.Output()
 	if err != nil {
 		return false, err
 	}
-	reader := bufio.NewReader(code)
-	for {
-		line, err := reader.ReadString('\n')
-		if err != nil || io.EOF == err {
-			switch line {
-			case "0":
-				return false, nil
-			case "1":
-				return true, nil
-			default:
-				return false, nil
-			}
-		}
+	result := strings.Replace(string(code), "\n", "", -1)
+	switch result {
+	case "0":
+		return false, nil
+	case "1":
+		return true, nil
+	default:
+		return false, nil
 	}
 }
 
