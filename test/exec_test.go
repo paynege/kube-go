@@ -2,6 +2,8 @@ package test
 
 import (
 	"paynege/kube-go/helper"
+	"paynege/kube-go/oscmd"
+
 	//"paynege/kube-go/oscmd"
 	"testing"
 )
@@ -28,6 +30,7 @@ func TestExecAppStatus(t *testing.T) {
 }
 */
 
+/*
 func TestGenerateTpl(t *testing.T) {
 
 	etcd_dist := "etcd_ca"
@@ -39,5 +42,20 @@ func TestGenerateTpl(t *testing.T) {
 	err = helper.GenerateTpl("192.168.3.100", "../template/kubernetes/admin-csr.json", k8s_dist)
 	if err != nil {
 		t.Error(`Error occur: ` + err.Error())
+	}
+}
+
+*/
+
+func TestExecDirectoryExist(t *testing.T) {
+	if bool, err := oscmd.ExecDirectoryExist("../template"); err != nil {
+		t.Error(`Error occur: ` + err.Error())
+	} else if !bool {
+		t.Error("template does not exist, expect existed")
+	}
+	if bool, err := oscmd.ExecDirectoryExist("../root"); err != nil {
+		t.Error(`Error occur: ` + err.Error())
+	} else if !bool {
+		t.Error("root existed, expect not existed")
 	}
 }
