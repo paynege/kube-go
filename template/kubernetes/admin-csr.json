@@ -1,6 +1,6 @@
 {
   "CN": "admin",
-  "hosts": ["{{ master-ip }}"],
+  "hosts": ["{{.}}"],
   "key": {
     "algo": "rsa",
     "size": 2048

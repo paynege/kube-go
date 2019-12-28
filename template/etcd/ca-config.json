@@ -1,11 +1,11 @@
 {
   "signing": {
     "default": {
-      "expiry": {{ cert-term }}
+      "expiry": {{.}}
     },
     "profiles": {
       "www": {
-         "expiry": "87600h",
+         "expiry": "{{.}}",
          "usages": [
             "signing",
             "key encipherment",
