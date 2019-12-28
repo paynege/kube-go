@@ -35,7 +35,8 @@ func ExecAppStatus(appName string) (string, error) {
 
 // Linux Chmod
 func ExecChmod(filename string, arg string) error {
-	cmd := exec.Command("chmod", arg, filename)
+	cmdString := "chmod " + arg + filename
+	cmd := exec.Command("sh", "-c", cmdString)
 	if err := cmd.Run(); err != nil {
 		return err
 	}
@@ -44,7 +45,8 @@ func ExecChmod(filename string, arg string) error {
 
 // Linux Copy
 func ExecCopy(rsc string, dist string) error {
-	cmd := exec.Command("cp", "-r", rsc, dist)
+	cmdString := "cp " + rsc + " " + dist
+	cmd := exec.Command("sh", "-c", cmdString)
 	if err := cmd.Run(); err != nil {
 		return err
 	}
@@ -53,7 +55,7 @@ func ExecCopy(rsc string, dist string) error {
 
 // Linux systemctl daemon-reload
 func ExecDaemonReload() error {
-	cmd := exec.Command("systemctl", "daemon-reload")
+	cmd := exec.Command("sh", "-c", "systemctl daemon-reload")
 	if err := cmd.Run(); err != nil {
 		return err
 	}
@@ -61,7 +63,8 @@ func ExecDaemonReload() error {
 }
 
 func ExecDirectoryExist(rsc string) (bool, error) {
-	cmd := exec.Command("test", "-e", "rsc", "&& echo 1 || echo 0")
+	cmdString := "test -e " + rsc + " && echo 1 || echo 0"
+	cmd := exec.Command("sh", "-c", cmdString)
 	code, err := cmd.StdoutPipe()
 	if err != nil {
 		return false, err
@@ -84,7 +87,8 @@ func ExecDirectoryExist(rsc string) (bool, error) {
 
 // Linux Mkdir
 func ExecMkdir(directoryPath string) error {
-	cmd := exec.Command("mkdir", "-r", directoryPath)
+	cmdString := "mkdir " + directoryPath
+	cmd := exec.Command("sh", "-c", cmdString)
 	if err := cmd.Run(); err != nil {
 		return err
 	}
@@ -92,7 +96,8 @@ func ExecMkdir(directoryPath string) error {
 }
 
 func ExecMove(rsc string, dist string) error {
-	cmd := exec.Command("mv", "-r", rsc, dist)
+	cmdString := "mv -r " + rsc + " " + dist
+	cmd := exec.Command("sh", "-c", cmdString)
 	if err := cmd.Run(); err != nil {
 		return err
 	}
@@ -101,7 +106,8 @@ func ExecMove(rsc string, dist string) error {
 
 // Linux systemctl enable
 func ExecEnableApp(appName string) error {
-	cmd := exec.Command("systemctl", "enable", appName)
+	cmdString := "systemctl enable " + appName
+	cmd := exec.Command("sh", "-c", cmdString)
 	if err := cmd.Run(); err != nil {
 		return err
 	}
@@ -110,7 +116,8 @@ func ExecEnableApp(appName string) error {
 
 // Linux systemctl restart
 func ExecRestartApp(appName string) error {
-	cmd := exec.Command("systemctl", "restart", appName)
+	cmdString := "systemctl restart " + appName
+	cmd := exec.Command("sh", "-c", cmdString)
 	if err := cmd.Run(); err != nil {
 		return err
 	}
@@ -119,7 +126,8 @@ func ExecRestartApp(appName string) error {
 
 // Linux systemctl start
 func ExecStartApp(appName string) error {
-	cmd := exec.Command("systemctl", "start", appName)
+	cmdString := "systemctl start " + appName
+	cmd := exec.Command("sh", "-c", cmdString)
 	if err := cmd.Run(); err != nil {
 		return err
 	}
