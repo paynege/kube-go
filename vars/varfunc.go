@@ -1,4 +1,4 @@
-package main
+package vars
 
 import (
 	"errors"
@@ -7,7 +7,7 @@ import (
 	"paynege/kube-go/oscmd"
 )
 
-func (hConfig *Config) readYaml(path string) (*Config, error) {
+func (hConfig *Config) ReadYaml(path string) (*Config, error) {
 	yamlFile, err := ioutil.ReadFile(path)
 	if err != nil {
 		return nil, err

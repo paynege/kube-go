@@ -1,4 +1,4 @@
-package main
+package vars
 
 type Node struct {
 	NodeName string `yaml:"name"`

@@ -52,6 +52,8 @@ func TestGenerateTpl(t *testing.T) {
 	}
 }
 
+/*
+
 func TestGenerateCert(t *testing.T) {
 	etcdDist := "etcd_ca"
 	//k8sDist := "k8s_ca"
@@ -76,3 +78,5 @@ func TestGenerateCert(t *testing.T) {
 		}
 	}
 }
+
+*/
