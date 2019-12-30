@@ -4,7 +4,7 @@ import (
 	"errors"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
-	"paynege/kube-go/oscmd"
+	"paynege/kube-go/action"
 )
 
 func (hConfig *Config) ReadYaml(path string) (*Config, error) {
@@ -17,7 +17,7 @@ func (hConfig *Config) ReadYaml(path string) (*Config, error) {
 }
 
 func (app *App) CheckStatus() (bool, error) {
-	status, err := oscmd.ExecAppStatus(app.AppName)
+	status, err := action.ExecAppStatus(app.AppName)
 	if err != nil {
 		return false, err
 	}
@@ -34,11 +34,11 @@ func (app *App) CheckStatus() (bool, error) {
 }
 
 func (app *App) SourcePathExist() (bool, error) {
-	status, err := oscmd.ExecDirectoryExist(app.AppSourcePath)
+	status, err := action.ExecDirectoryExist(app.AppSourcePath)
 	return status, err
 }
 
 func (app *App) TargetPathExist() (bool, error) {
-	status, err := oscmd.ExecDirectoryExist(app.AppTargetPath)
+	status, err := action.ExecDirectoryExist(app.AppTargetPath)
 	return status, err
 }

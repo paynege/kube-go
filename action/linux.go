@@ -1,4 +1,4 @@
-package oscmd
+package action
 
 import (
 	"os"
@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func CheckAppInstalled(appName string) (bool, error) {
+func IfAppInstalled(appName string) (bool, error) {
 	cmdString := "yum info installed " + appName
 	cmd := exec.Command("sh", "-c", cmdString)
 	out, err := cmd.Output()
@@ -20,7 +20,7 @@ func CheckAppInstalled(appName string) (bool, error) {
 	}
 }
 
-func CheckFileExisted(file string) (bool, error) {
+func IfFileExisted(file string) (bool, error) {
 	_, err := os.Stat(file)
 	if err == nil {
 		return true, nil
@@ -32,8 +32,8 @@ func CheckFileExisted(file string) (bool, error) {
 }
 
 // Linux systemctl is-active
-func ExecAppStatus(appName string) (string, error) {
-	cmdString := "systemctl status " + appName + ` | grep Active | awk -F " " '{print $2}'`
+func ServiceStatus(serviceName string) (string, error) {
+	cmdString := "systemctl status " + serviceName + ` | grep Active | awk -F " " '{print $2}'`
 	cmd := exec.Command("sh", "-c", cmdString)
 	out, err := cmd.Output()
 	if err != nil {
@@ -44,8 +44,8 @@ func ExecAppStatus(appName string) (string, error) {
 }
 
 // Linux Chmod
-func ExecChmod(filename string, arg string) error {
-	cmdString := "chmod " + arg + filename
+func Chmod(file string, arg string) error {
+	cmdString := "chmod " + arg + file
 	cmd := exec.Command("sh", "-c", cmdString)
 	if err := cmd.Run(); err != nil {
 		return err
@@ -54,7 +54,7 @@ func ExecChmod(filename string, arg string) error {
 }
 
 // Linux Copy
-func ExecCopy(rsc string, dist string) error {
+func Copy(rsc string, dist string) error {
 	cmdString := "cp " + rsc + " " + dist
 	cmd := exec.Command("sh", "-c", cmdString)
 	if err := cmd.Run(); err != nil {
@@ -64,7 +64,7 @@ func ExecCopy(rsc string, dist string) error {
 }
 
 // Linux systemctl daemon-reload
-func ExecDaemonReload() error {
+func DaemonReload() error {
 	cmd := exec.Command("sh", "-c", "systemctl daemon-reload")
 	if err := cmd.Run(); err != nil {
 		return err
@@ -72,8 +72,8 @@ func ExecDaemonReload() error {
 	return nil
 }
 
-func ExecDirectoryExist(rsc string) (bool, error) {
-	cmdString := "test -e " + rsc + " && echo 1 || echo 0"
+func IfDirectoryExisted(directory string) (bool, error) {
+	cmdString := "test -e " + directory + " && echo 1 || echo 0"
 	cmd := exec.Command("sh", "-c", cmdString)
 	code, err := cmd.Output()
 	if err != nil {
@@ -91,8 +91,8 @@ func ExecDirectoryExist(rsc string) (bool, error) {
 }
 
 // Linux Mkdir
-func ExecMkdir(directoryPath string) error {
-	cmdString := "mkdir " + directoryPath
+func Mkdir(directory string) error {
+	cmdString := "mkdir " + directory
 	cmd := exec.Command("sh", "-c", cmdString)
 	if err := cmd.Run(); err != nil {
 		return err
@@ -100,7 +100,7 @@ func ExecMkdir(directoryPath string) error {
 	return nil
 }
 
-func ExecMove(rsc string, dist string) error {
+func Move(rsc string, dist string) error {
 	cmdString := "mv -r " + rsc + " " + dist
 	cmd := exec.Command("sh", "-c", cmdString)
 	if err := cmd.Run(); err != nil {
@@ -110,8 +110,8 @@ func ExecMove(rsc string, dist string) error {
 }
 
 // Linux systemctl enable
-func ExecEnableApp(appName string) error {
-	cmdString := "systemctl enable " + appName
+func ServiceEnable(serviceName string) error {
+	cmdString := "systemctl enable " + serviceName
 	cmd := exec.Command("sh", "-c", cmdString)
 	if err := cmd.Run(); err != nil {
 		return err
@@ -120,8 +120,8 @@ func ExecEnableApp(appName string) error {
 }
 
 // Linux systemctl restart
-func ExecRestartApp(appName string) error {
-	cmdString := "systemctl restart " + appName
+func ServiceRestart(serviceName string) error {
+	cmdString := "systemctl restart " + serviceName
 	cmd := exec.Command("sh", "-c", cmdString)
 	if err := cmd.Run(); err != nil {
 		return err
@@ -130,11 +130,23 @@ func ExecRestartApp(appName string) error {
 }
 
 // Linux systemctl start
-func ExecStartApp(appName string) error {
-	cmdString := "systemctl start " + appName
+func ServiceStart(serviceName string) error {
+	cmdString := "systemctl start " + serviceName
 	cmd := exec.Command("sh", "-c", cmdString)
 	if err := cmd.Run(); err != nil {
 		return err
 	}
 	return nil
+}
+
+func Reboot() error {
+	cmd := exec.Command("sh", "-c", "reboot")
+	err := cmd.Run()
+	return err
+}
+
+func PowerOff() error {
+	cmd := exec.Command("sh", "-c", "poweroff")
+	err := cmd.Run()
+	return err
 }

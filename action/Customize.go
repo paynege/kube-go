@@ -1,10 +1,46 @@
-package helper
+package action
 
 import (
 	"errors"
+	"os"
 	"os/exec"
 	"path/filepath"
+	"text/template"
 )
+
+func GenerateTpl(value interface{}, rsc string, dist string) error {
+	_, tplName := filepath.Split(rsc)
+	tpl, err := template.New(tplName).ParseFiles(rsc)
+	if err != nil {
+		return err
+	}
+	result, err := IfDirectoryExisted(dist)
+	if err != nil {
+		return err
+	}
+	if !result {
+		err = Mkdir(dist)
+		if err != nil {
+			return err
+		}
+	}
+
+	var targetPath string
+	if s := dist[len(dist)-1:]; s != "/" {
+		targetPath = dist + "/" + tplName
+	} else {
+		targetPath = dist + tplName
+	}
+	tplFile, err := os.Create(targetPath)
+	if err != nil {
+		return err
+	}
+	err = tpl.Execute(tplFile, value)
+	if err != nil {
+		return err
+	}
+	return nil
+}
 
 func GenerateCertFile(appName string, jsonPath string) error {
 	switch appName {
