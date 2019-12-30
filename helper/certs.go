@@ -1,7 +1,7 @@
 package helper
 
 import (
-	"github.com/pkg/errors"
+	"errors"
 	"os/exec"
 	"path/filepath"
 )
