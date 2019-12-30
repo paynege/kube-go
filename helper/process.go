@@ -1,4 +1,4 @@
-package process
+package helper
 
 import (
 	"log"
@@ -15,5 +15,5 @@ func PrepareDirectory(appConfig *vars.Config) {
 			log.Println(err)
 		}
 	}
-	//if err := oscmd.ExecMkdir()
+	//if err := oscmd.ExecMkdir("")
 }
