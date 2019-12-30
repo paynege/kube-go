@@ -51,3 +51,28 @@ func TestGenerateTpl(t *testing.T) {
 		t.Error(`Error occur: ` + err.Error())
 	}
 }
+
+func TestGenerateCert(t *testing.T) {
+	etcdDist := "etcd_ca"
+	//k8sDist := "k8s_ca"
+	err := helper.GenerateCertFile("etcd", etcdDist)
+	if err != nil {
+		t.Error(err.Error())
+	} else {
+		if status, err := oscmd.CheckFileExisted("etcd_ca/ca.pem"); status == false && err == nil {
+			t.Error("ca.pem not generated")
+		}
+		if status, err := oscmd.CheckFileExisted("etcd_ca/ca.csr"); status != true && err == nil {
+			t.Error("ca.csr not generated")
+		}
+		if status, err := oscmd.CheckFileExisted("etcd_ca/ca-key.pem"); status != true && err == nil {
+			t.Error("etcd_ca/ca-key.pem not generated")
+		}
+		if status, err := oscmd.CheckFileExisted("etcd_ca/server.pem"); status != true && err == nil {
+			t.Error("etcd_ca/server.pem not generated")
+		}
+		if status, err := oscmd.CheckFileExisted("etcd_ca/server-key.pem"); status != true && err == nil {
+			t.Error("etcd_ca/server-key.pem not generated")
+		}
+	}
+}

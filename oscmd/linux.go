@@ -1,6 +1,7 @@
 package oscmd
 
 import (
+	"os"
 	"os/exec"
 	"strings"
 )
@@ -17,6 +18,17 @@ func CheckAppInstalled(appName string) (bool, error) {
 	} else {
 		return false, nil
 	}
+}
+
+func CheckFileExisted(file string) (bool, error) {
+	_, err := os.Stat(file)
+	if err == nil {
+		return true, nil
+	}
+	if os.IsNotExist(err) {
+		return false, nil
+	}
+	return false, err
 }
 
 // Linux systemctl is-active
