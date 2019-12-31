@@ -139,6 +139,16 @@ func ServiceStart(serviceName string) error {
 	return nil
 }
 
+// Linux systemctl stop
+func ServiceStop(serviceName string) error {
+	cmdString := "systemctl stop " + serviceName
+	cmd := exec.Command("sh", "-c", cmdString)
+	if err := cmd.Run(); err != nil {
+		return err
+	}
+	return nil
+}
+
 func Reboot() error {
 	cmd := exec.Command("sh", "-c", "reboot")
 	err := cmd.Run()

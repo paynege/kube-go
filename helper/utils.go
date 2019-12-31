@@ -18,11 +18,10 @@ func ParseYaml(file string) ([]map[string]interface{}, error) {
 }
 
 func ParseAction(a map[string]interface{}) error {
-	switch a["name"] {
+	switch a["name"].(string) {
 	case "copy":
 		err := action.Copy(a["src"].(string), a["dest"].(string))
 		return err
-
 	case "chmod":
 		var p string
 		if v, ok := a["exec"]; ok {
@@ -50,5 +49,35 @@ func ParseAction(a map[string]interface{}) error {
 		return err
 	default:
 		return errors.New("Unsupported action")
+	}
+}
+
+func finish(cmd string, arg string, app string) error {
+	switch cmd {
+	case "systemctl":
+		switch arg {
+		case "enable":
+			err := action.ServiceEnable(app)
+			return err
+		case "restart":
+			err := action.ServiceRestart(app)
+			return err
+		case "stop":
+			err := action.ServiceStop(app)
+			return err
+		case "start":
+			err := action.ServiceStart(app)
+			return err
+		default:
+			return nil
+		}
+	case "poweroff":
+		err := action.PowerOff()
+		return err
+	case "reboot":
+		err := action.Reboot()
+		return err
+	default:
+		return nil
 	}
 }
