@@ -1,0 +1,20 @@
+- action:
+    description: copy cfssl binary to /usr/local/bin/
+    name: copy
+    src: ./bin/*
+    dest: /usr/local/bin/
+- action:
+    description: add exec authority to /usr/local/bin/cfssl_linux-amd64
+    name: chmod
+    exec: true
+    file: /usr/local/bin/cfssl_linux-amd64
+- action:
+    description: add exec authority to /usr/local/bin/cfssl-certinfo_linux-amd64
+    name: chmod
+    exec: true
+    file: /usr/local/bin/cfssl-certinfo_linux-amd64
+- action:
+    description: add exec authority to /usr/local/bin/cfssljson_linux-amd64
+    name: chmod
+    exec: true
+    file: /usr/local/bin/cfssljson_linux-amd64

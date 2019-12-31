@@ -2,15 +2,16 @@ package main
 
 import (
 	"log"
-	"paynege/kube-go/vars"
+	"paynege/kube-go/helper"
 )
 
 func main() {
-	hostConfig := vars.Config{}
-
-	if _, err := hostConfig.ReadYaml("cfg/configure.yaml"); err != nil {
+	m := []map[string]interface{}{}
+	m, err := helper.ParseYaml("manifest.yaml")
+	if err != nil {
 		log.Fatalln(err)
 	}
-
-	//hostConfig.AppInfo[0].CheckStatus()
+	for i := range m {
+		helper.ParseAction(m[i])
+	}
 }
